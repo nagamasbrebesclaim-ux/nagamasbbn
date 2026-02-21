@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outstanding STNK & Nopol — Nagamas Motor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #CC0000;
+      --red-vivid: #E60012;
+      --red-light: #FF2233;
+      --red-dim: rgba(204, 0, 0, 0.07);
+      --red-dim2: rgba(204, 0, 0, 0.13);
+      --white: #FFFFFF;
+      --off-white: #FAF9F7;
+      --grey-50: #F8F8F8;
+      --grey-100: #F0EFED;
+      --grey-200: #E2E1DE;
+      --grey-300: #C8C7C3;
+      --grey-500: #8A8982;
+      --grey-700: #4A4946;
+      --ink: #1A1917;
+      --radius-sm: 8px;
+      --radius: 14px;
+      --radius-lg: 22px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 16px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--ink);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--grey-200);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      background: var(--red);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-badge svg { width: 26px; height: 26px; }
+
+    .logo-text h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text p {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--grey-500);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--grey-200);
+      background: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--grey-500);
+      transition: var(--transition);
+    }
+
+    .btn-icon:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: var(--red-dim);
+    }
+
+    .btn-icon.spin svg { animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .btn-primary {
+      height: 40px;
+      padding: 0 20px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--red-light); }
+    .btn-primary svg { width: 16px; height: 16px; }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
+
+    /* ─── HERO STRIP ─── */
+    .hero-strip {
+      background: var(--red);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-strip::before {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .hero-strip::after {
+      content: '';
+      position: absolute;
+      right: 60px;
+      bottom: -60px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-left h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .hero-left p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 400;
+    }
+
+    .hero-date {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      text-align: right;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-date .date-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero-date .date-val {
+      font-family: 'DM Serif Display', serif;
+      font-size: 15px;
+      color: white;
+      margin-top: 2px;
+    }
+
+    /* ─── STATS ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card-accent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--grey-200);
+    }
+
+    .stat-card.red .stat-card-accent { background: var(--red); }
+    .stat-card.green .stat-card-accent { background: #16a34a; }
+    .stat-card.blue .stat-card-accent { background: #2563eb; }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--grey-500);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 38px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat-card.red .stat-number { color: var(--red); }
+    .stat-card.green .stat-number { color: #16a34a; }
+    .stat-card.blue .stat-number { color: #2563eb; }
+
+    .stat-sub {
+      font-size: 12px;
+      color: var(--grey-500);
+      margin-top: 6px;
+    }
+
+    /* ─── TOOLBAR ─── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--grey-300);
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      height: 42px;
+      padding: 0 14px 0 40px;
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-dim);
+    }
+
+    .search-wrap input::placeholder { color: var(--grey-300); }
+
+    .filter-select {
+      height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--grey-700);
+      outline: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-select:focus { border-color: var(--red); }
+
+    /* ─── TABLE SECTION ─── */
+    .table-section {
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .table-section-head {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--grey-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--grey-50);
+    }
+
+    .table-section-head h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .count-pill {
+      background: var(--red-dim2);
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+
+    .table-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .table-scroll::-webkit-scrollbar-track { background: transparent; }
+    .table-scroll::-webkit-scrollbar-thumb { background: var(--grey-200); border-radius: 3px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    thead { position: sticky; top: 0; z-index: 5; }
+
+    th {
+      background: var(--grey-50);
+      color: var(--grey-500);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--grey-200);
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--grey-100);
+      color: var(--grey-700);
+      vertical-align: middle;
+      font-size: 13px;
+      transition: background var(--transition);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: var(--grey-50); }
+
+    .td-primary {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* STATUS BADGE */
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-status::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .badge-proses {
+      background: #FEF3C7;
+      color: #B45309;
+      border: 1px solid #FDE68A;
+    }
+
+    .badge-selesai {
+      background: #DCFCE7;
+      color: #15803D;
+      border: 1px solid #BBF7D0;
+    }
+
+    /* EDIT BTN */
+    .btn-row-edit {
+      height: 32px;
+      padding: 0 14px;
+      background: transparent;
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--grey-500);
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-row-edit:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    .state-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--grey-500);
+    }
+
+    .state-empty .empty-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .state-empty p {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* ─── MODAL ─── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 900;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    @media (min-width: 600px) {
+      .overlay { align-items: center; padding: 20px; }
+    }
+
+    .modal {
+      background: var(--white);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (min-width: 600px) {
+      .modal { border-radius: 20px; animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    }
+
+    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes popIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .modal-handle {
+      display: flex;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .modal-handle-bar {
+      width: 36px;
+      height: 4px;
+      background: var(--grey-200);
+      border-radius: 2px;
+    }
+
+    @media (min-width: 600px) { .modal-handle { display: none; } }
+
+    .modal-head {
+      padding: 0 24px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-head-left { flex: 1; }
+
+    .modal-head-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .modal-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--grey-100);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--grey-500);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover { background: var(--red-dim); color: var(--red); }
+
+    .modal-divider { height: 1px; background: var(--grey-100); }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    /* FORM */
+    .field-group { margin-bottom: 20px; }
+
+    .field-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 8px;
+    }
+
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--grey-200);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--white);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-dim);
+    }
+
+    .field-group textarea { resize: vertical; min-height: 90px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* STATUS TOGGLES */
+    .status-toggle-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .status-opt { display: none; }
+
+    .status-opt + label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 12px;
+      border: 1.5px solid var(--grey-200);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      transition: var(--transition);
+      background: var(--white);
+    }
+
+    .status-opt + label .opt-icon { font-size: 22px; }
+
+    .status-opt + label .opt-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--grey-500);
+      letter-spacing: 0.3px;
+    }
+
+    .status-opt:checked + label {
+      box-shadow: var(--shadow);
+    }
+
+    #optProses:checked + label {
+      border-color: #D97706;
+      background: #FFFBEB;
+    }
+
+    #optProses:checked + label .opt-label { color: #B45309; }
+
+    #optSelesai:checked + label {
+      border-color: #16a34a;
+      background: #F0FDF4;
+    }
+
+    #optSelesai:checked + label .opt-label { color: #15803D; }
+
+    .btn-submit {
+      width: 100%;
+      height: 50px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-submit:hover { background: var(--red-light); box-shadow: 0 4px 14px rgba(204,0,0,0.35); }
+    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; box-shadow: none; }
+
+    /* FORM TAMBAH */
+    .add-form-section {
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .add-form-section.open { display: block; animation: fadeSlide 0.25s ease; }
+    @keyframes fadeSlide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .add-form-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--grey-100);
+      background: var(--grey-50);
+    }
+
+    .add-form-head h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .add-form-body { padding: 24px; }
+
+    /* TOAST */
+    .toast-wrap {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toast-wrap.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ink);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      max-width: 90vw;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast-wrap.success .toast-inner { background: #15803D; }
+    .toast-wrap.error .toast-inner { background: var(--red); }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero-strip { padding: 22px 20px; }
+      .hero-left h2 { font-size: 18px; }
+      .hero-date { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ROW PREVIEW IN MODAL */
+    .row-context {
+      background: var(--grey-50);
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 20px;
+      font-size: 12.5px;
+      line-height: 1.8;
+      color: var(--grey-700);
+    }
+
+    .row-context strong { color: var(--ink); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── HEADER ─── -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-badge">
+          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 20L7 6h2l4 8 4-8h2l4 14h-3l-2.5-8.5L13 18h-1l-4.5-6.5L5 20H3z" fill="white"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>Nagamas Motor</h1>
+          <p>Outstanding STNK &amp; Nopol</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" id="btnRefresh" title="Refresh data" onclick="loadTableData()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+            <path d="M8 16H3v5"/>
+          </svg>
+        </button>
+        <button class="btn-primary" onclick="toggleAddForm()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Tambah Data
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── MAIN ─── -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero-strip">
+      <div class="hero-left">
+        <h2>Monitoring BBN Outstanding</h2>
+        <p>Pantau & kelola status STNK dan Nomor Polisi yang masih dalam proses</p>
+      </div>
+      <div class="hero-date">
+        <div class="date-label">Update Terakhir</div>
+        <div class="date-val" id="lastUpdate">—</div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid" id="statsGrid" style="display:none;">
+      <div class="stat-card blue">
+        <div class="stat-label">Total Dokumen</div>
+        <div class="stat-number" id="statTotal">—</div>
+        <div class="stat-sub">Seluruh entri</div>
+        <div class="stat-card-accent"></div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">Masih Proses</div>
+        <div class="stat-number" id="statProses">—</div>
+        <div class="stat-sub">Perlu tindakan</div>
+        <div class="stat-card-accent"></div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Selesai</div>
+        <div class="stat-number" id="statSelesai">—</div>
+        <div class="stat-sub">Sudah beres</div>
+        <div class="stat-card-accent"></div>
+      </div>
+    </div>
+
+    <!-- ADD FORM -->
+    <div class="add-form-section" id="addFormSection">
+      <div class="add-form-head">
+        <h3>➕ Tambah Data STNK Outstanding</h3>
+        <button class="btn-icon" onclick="toggleAddForm()" title="Tutup">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="add-form-body">
+        <form id="formTambah" onsubmit="submitTambah(event)">
+          <div class="form-grid">
+            <div class="field-group">
+              <label>Nama Customer *</label>
+              <input type="text" id="addNama" placeholder="Nama lengkap customer" required>
+            </div>
+            <div class="field-group">
+              <label>No. Polisi *</label>
+              <input type="text" id="addNopol" placeholder="cth: B 1234 ABC" required>
+            </div>
+            <div class="field-group">
+              <label>No. Rangka / VIN</label>
+              <input type="text" id="addRangka" placeholder="Nomor rangka kendaraan">
+            </div>
+            <div class="field-group">
+              <label>Tipe / Model Motor</label>
+              <input type="text" id="addTipe" placeholder="cth: Honda Vario 125">
+            </div>
+            <div class="field-group">
+              <label>No. Invoice / SPK</label>
+              <input type="text" id="addInvoice" placeholder="Nomor invoice">
+            </div>
+            <div class="field-group">
+              <label>Tgl. Pembelian</label>
+              <input type="date" id="addTanggal">
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Keterangan / Catatan</label>
+            <textarea id="addKeterangan" placeholder="Tuliskan keterangan awal, kendala, atau catatan penting..."></textarea>
+          </div>
+          <div class="field-group">
+            <label>Status Awal</label>
+            <div class="status-toggle-group">
+              <input type="radio" name="statusTambah" id="addProses" class="status-opt" value="MASIH PROSES" checked>
+              <label for="addProses">
+                <span class="opt-icon">⏳</span>
+                <span class="opt-label">Masih Proses</span>
+              </label>
+              <input type="radio" name="statusTambah" id="addSelesai" class="status-opt" value="SELESAI">
+              <label for="addSelesai">
+                <span class="opt-icon">✅</span>
+                <span class="opt-label">Sudah Selesai</span>
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit" id="btnSubmitTambah">
+            <span>Simpan ke Spreadsheet</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Cari nama, nopol, invoice, status..." oninput="filterRows()">
+      </div>
+      <select class="filter-select" id="filterStatus" onchange="filterRows()">
+        <option value="">Semua Status</option>
+        <option value="MASIH PROSES">Masih Proses</option>
+        <option value="SELESAI">Selesai</option>
+      </select>
+    </div>
+
+    <div class="table-section">
+      <div class="table-section-head">
+        <h3>Database Outstanding BBN</h3>
+        <span class="count-pill" id="countPill">Memuat...</span>
+      </div>
+      <div class="table-scroll" id="tableScroll">
+        <table id="mainTable">
+          <thead><tr id="tableHead"></tr></thead>
+          <tbody id="tableBody">
+            <tr>
+              <td colspan="99">
+                <div class="state-empty">
+                  <span class="empty-icon">⏳</span>
+                  <p>Memuat data dari server...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ─── EDIT MODAL ─── -->
+  <div class="overlay" id="editOverlay">
+    <div class="modal" id="editModal">
+      <div class="modal-handle"><div class="modal-handle-bar"></div></div>
+      <div class="modal-head">
+        <div class="modal-head-left">
+          <div class="modal-head-label">Update Progress</div>
+          <h2>Edit Status BBN</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-body">
+        <div class="row-context" id="rowContext"></div>
+        <form onsubmit="submitEdit(event)">
+          <input type="hidden" id="editRowIndex">
+          <div class="field-group">
+            <label>Keterangan / Catatan Progress</label>
+            <textarea id="editKet" rows="4" placeholder="Update keterangan terkini..."></textarea>
+          </div>
+          <div class="field-group">
+            <label>Status Dokumen</label>
+            <div class="status-toggle-group">
+              <input type="radio" name="statusEdit" id="optProses" class="status-opt" value="MASIH PROSES" checked>
+              <label for="optProses">
+                <span class="opt-icon">⏳</span>
+                <span class="opt-label">Masih Proses</span>
+              </label>
+              <input type="radio" name="statusEdit" id="optSelesai" class="status-opt" value="SELESAI">
+              <label for="optSelesai">
+                <span class="opt-icon">✅</span>
+                <span class="opt-label">Sudah Selesai</span>
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit" id="btnSimpanEdit">
+            <span>Simpan Perubahan</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TOAST ─── -->
+  <div class="toast-wrap" id="toast">
+    <div class="toast-inner" id="toastInner"></div>
+  </div>
+
+  <script>
+    // ─── CONFIG ───
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycby_57Y1mWTfQf3bVBh-p9KdgRBGzYSZ9JcQOVldR7TmraOMxxJFysQVdr0mAYCV_5EzLQ/exec';
+
+    let allData = [];
+    let headers = [];
+
+    // ─── INIT ───
+    document.addEventListener('DOMContentLoaded', () => {
+      updateLastUpdate();
+      loadTableData();
+    });
+
+    // Close overlay on backdrop click
+    document.getElementById('editOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // ─── DATE ───
+    function updateLastUpdate() {
+      const now = new Date();
+      const opt = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+      document.getElementById('lastUpdate').textContent = now.toLocaleString('id-ID', opt);
+    }
+
+    // ─── LOAD DATA ───
+    async function loadTableData() {
+      const btn = document.getElementById('btnRefresh');
+      btn.classList.add('spin');
+      setBodyLoading(true);
+
+      try {
+        const res = await fetch(`${GAS_URL}?action=getData&t=${Date.now()}`);
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        allData = data;
+        renderTable(data);
+        updateStats(data);
+        updateLastUpdate();
+      } catch (err) {
+        setBodyEmpty('❌', 'Gagal memuat data. Coba refresh ulang.');
+        showToast('Gagal memuat: ' + err.message, 'error');
+      } finally {
+        btn.classList.remove('spin');
+      }
+    }
+
+    function setBodyLoading(state) {
+      if (state) {
+        document.getElementById('tableBody').innerHTML = `
+          <tr><td colspan="99"><div class="state-empty"><span class="empty-icon">⏳</span><p>Memuat data terbaru...</p></div></td></tr>`;
+      }
+    }
+
+    function setBodyEmpty(icon, msg) {
+      document.getElementById('tableBody').innerHTML = `
+        <tr><td colspan="99"><div class="state-empty"><span class="empty-icon">${icon}</span><p>${msg}</p></div></td></tr>`;
+      document.getElementById('countPill').textContent = '0 data';
+    }
+
+    function renderTable(data) {
+      if (!data || data.length <= 1) {
+        setBodyEmpty('📭', 'Belum ada data outstanding');
+        document.getElementById('tableHead').innerHTML = '';
+        document.getElementById('statsGrid').style.display = 'none';
+        return;
+      }
+
+      headers = data[0].slice(0, data[0].length - 1); // exclude rowIndex
+
+      // Head
+      let hHtml = headers.map(h => `<th>${esc(h)}</th>`).join('');
+      hHtml += '<th>AKSI</th>';
+      document.getElementById('tableHead').innerHTML = hHtml;
+
+      renderRows(data);
+    }
+
+    function renderRows(data) {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('filterStatus').value;
+      let count = 0;
+      let html = '';
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        const rowIndex = row[row.length - 1];
+        const rowStr = row.join(' ').toLowerCase();
+
+        if (keyword && !rowStr.includes(keyword)) continue;
+        if (statusFilter) {
+          const hasStatus = row.some(c => c === statusFilter);
+          if (!hasStatus) continue;
+        }
+
+        count++;
+        html += '<tr>';
+        for (let j = 0; j < headers.length; j++) {
+          const val = row[j] || '';
+          const isStatus = (val === 'MASIH PROSES' || val === 'SELESAI');
+          const isPrimary = j === 0 || j === 1; // First two cols bold
+
+          if (isStatus) {
+            const cls = val === 'SELESAI' ? 'badge-selesai' : 'badge-proses';
+            html += `<td><span class="badge-status ${cls}">${esc(val)}</span></td>`;
+          } else if (isPrimary) {
+            html += `<td class="td-primary">${esc(val)}</td>`;
+          } else {
+            html += `<td>${esc(val)}</td>`;
+          }
+        }
+        html += `<td><button class="btn-row-edit" onclick="openEditModal(${rowIndex}, ${i})">✏ Edit</button></td>`;
+        html += '</tr>';
+      }
+
+      if (count === 0) {
+        html = `<tr><td colspan="99"><div class="state-empty"><span class="empty-icon">🔍</span><p>Tidak ada data yang cocok</p></div></td></tr>`;
+      }
+
+      document.getElementById('tableBody').innerHTML = html;
+      document.getElementById('countPill').textContent = `${count} data`;
+    }
+
+    function filterRows() {
+      if (allData.length > 0) renderRows(allData);
+    }
+
+    // ─── STATS ───
+    function updateStats(data) {
+      const total = data.length - 1;
+      let proses = 0, selesai = 0;
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (row.includes('MASIH PROSES')) proses++;
+        if (row.includes('SELESAI')) selesai++;
+      }
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statProses').textContent = proses;
+      document.getElementById('statSelesai').textContent = selesai;
+      document.getElementById('statsGrid').style.display = 'grid';
+    }
+
+    // ─── TOGGLE FORM TAMBAH ───
+    function toggleAddForm() {
+      const el = document.getElementById('addFormSection');
+      el.classList.toggle('open');
+      if (el.classList.contains('open')) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // ─── SUBMIT TAMBAH ───
+    async function submitTambah(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitTambah');
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'Menyimpan...';
+
+      const payload = {
+        action: 'tambahData',
+        nama: document.getElementById('addNama').value.trim(),
+        nopol: document.getElementById('addNopol').value.trim(),
+        rangka: document.getElementById('addRangka').value.trim(),
+        tipe: document.getElementById('addTipe').value.trim(),
+        invoice: document.getElementById('addInvoice').value.trim(),
+        tanggal: document.getElementById('addTanggal').value,
+        keterangan: document.getElementById('addKeterangan').value.trim(),
+        status: document.querySelector('input[name="statusTambah"]:checked').value,
+      };
+
+      try {
+        const res = await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          showToast('✅ Data berhasil ditambahkan!', 'success');
+          document.getElementById('formTambah').reset();
+          document.getElementById('addProses').checked = true;
+          toggleAddForm();
+          await loadTableData();
+        } else {
+          throw new Error(result.message || 'Gagal menyimpan');
+        }
+      } catch (err) {
+        showToast('❌ Gagal: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.querySelector('span').textContent = 'Simpan ke Spreadsheet';
+      }
+    }
+
+    // ─── EDIT MODAL ───
+    function openEditModal(rowIndex, dataIdx) {
+      document.getElementById('editRowIndex').value = rowIndex;
+      document.getElementById('editKet').value = '';
+      document.getElementById('optProses').checked = true;
+
+      // Row context
+      const row = allData[dataIdx];
+      if (row && headers.length > 0) {
+        const max = Math.min(4, headers.length);
+        let ctx = '';
+        for (let k = 0; k < max; k++) {
+          if (row[k]) ctx += `<strong>${esc(headers[k])}:</strong> ${esc(row[k])}<br>`;
+        }
+        document.getElementById('rowContext').innerHTML = ctx || '';
+        document.getElementById('rowContext').style.display = ctx ? 'block' : 'none';
+      }
+
+      document.getElementById('editOverlay').style.display = 'flex';
+      setTimeout(() => document.getElementById('editKet').focus(), 300);
+    }
+
+    function closeModal() {
+      document.getElementById('editOverlay').style.display = 'none';
+    }
+
+    // ─── SUBMIT EDIT ───
+    async function submitEdit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSimpanEdit');
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'Menyimpan...';
+
+      const rowIndex = document.getElementById('editRowIndex').value;
+      const ket = document.getElementById('editKet').value.trim();
+      const status = document.querySelector('input[name="statusEdit"]:checked').value;
+
+      const payload = { action: 'updateData', baris: rowIndex, keterangan: ket, status };
+
+      try {
+        const res = await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          showToast('✅ ' + result.message, 'success');
+          closeModal();
+          await loadTableData();
+        } else {
+          throw new Error(result.message || 'Gagal update');
+        }
+      } catch (err) {
+        showToast('❌ Gagal: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.querySelector('span').textContent = 'Simpan Perubahan';
+      }
+    }
+
+    // ─── HELPERS ───
+    function showToast(msg, type = '') {
+      const wrap = document.getElementById('toast');
+      const inner = document.getElementById('toastInner');
+      inner.textContent = msg;
+      wrap.className = 'toast-wrap ' + type;
+      void wrap.offsetWidth;
+      wrap.classList.add('show');
+      setTimeout(() => wrap.classList.remove('show'), 3500);
+    }
+
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  </script>
+
+</body>
+</html>
