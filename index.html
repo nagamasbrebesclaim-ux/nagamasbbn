@@ -1171,8 +1171,14 @@
     }
 
     // ─── STATS ───
-    function updateStats(data) {
-      const total = data.length - 1;
+   function updateStats(data) {
+  const total = data.length - 1; // -1 karena baris pertama adalah header
+  let proses = 0, selesai = 0;
+  for (let i = 1; i < data.length; i++) { // mulai dari 1, skip header
+    const row = data[i];
+    if (row.includes('MASIH PROSES')) proses++;
+    if (row.includes('SELESAI')) selesai++;
+  }
       let proses = 0, selesai = 0;
       for (let i = 1; i < data.length; i++) {
         const row = data[i];
