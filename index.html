@@ -1196,85 +1196,88 @@
       return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    // Find index of tanggal column from headers
-    function getTanggalColIdx() {
-      const idx = headers.findIndex(h => /tanggal|tgl|date/i.test(String(h)));
-      return idx !== -1 ? idx : 5; // fallback ke index 5
+    // Cari index kolom "Durasi STNK" (kolom H, index 7) dari headers
+    function getDurasiStnkIdx() {
+      const idx = headers.findIndex(h => /durasi.*(stnk|bbn)/i.test(String(h)));
+      if (idx !== -1) return idx;
+      // fallback: cari kolom "Durasi" pertama
+      const idx2 = headers.findIndex(h => /^durasi/i.test(String(h).trim()));
+      return idx2 !== -1 ? idx2 : 7; // fallback hardcode index 7 (kolom H)
     }
 
-    // Hitung selisih hari dari tanggal ke hari ini
-    function getDurasiHari(tglStr) {
-      if (!tglStr) return null;
-      const d = new Date(tglStr);
-      if (isNaN(d)) return null;
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      d.setHours(0, 0, 0, 0);
-      return Math.floor((today - d) / 86400000);
-    }
-
-    function getDurasiBadge(hari) {
-      if (hari === null) return '';
-      if (hari <= 3) return `<span class="badge-duration d-ok">${hari} hr</span>`;
-      if (hari <= 5) return `<span class="badge-duration d-warn">${hari} hr</span>`;
+    // Badge warna berdasarkan nilai durasi dari kolom Durasi STNK
+    function getDurasiBadge(val) {
+      const hari = parseInt(val);
+      if (isNaN(hari) || hari === 0) return `<span class="badge-duration d-ok">—</span>`;
+      if (hari <= 3)  return `<span class="badge-duration d-ok">${hari} hr</span>`;
+      if (hari <= 5)  return `<span class="badge-duration d-warn">${hari} hr</span>`;
       if (hari <= 14) return `<span class="badge-duration d-alert">${hari} hr</span>`;
       return `<span class="badge-duration d-critical">${hari} hr 🔥</span>`;
     }
 
-    function renderRows(data) {
-      const keyword = document.getElementById('searchInput').value.toLowerCase();
+    function getFilteredRows(data) {
+      const keyword     = document.getElementById('searchInput').value.toLowerCase();
       const statusFilter = document.getElementById('filterStatus').value;
       const durasiFilter = parseInt(document.getElementById('filterDurasi').value) || 0;
-      const tglIdx = getTanggalColIdx();
-      let count = 0;
-      let html = '';
+      const durasiIdx   = getDurasiStnkIdx();
+      const result = [];
 
       for (let i = 1; i < data.length; i++) {
         const row = data[i];
-        const rowIndex = row[row.length - 1];
         const rowStr = row.join(' ').toLowerCase();
 
+        // Filter teks
         if (keyword && !rowStr.includes(keyword)) continue;
-        if (statusFilter) {
-          const hasStatus = row.some(c => c === statusFilter);
-          if (!hasStatus) continue;
-        }
 
-        // Filter durasi
-        const hari = getDurasiHari(row[tglIdx]);
+        // Filter status
+        if (statusFilter && !row.some(c => c === statusFilter)) continue;
+
+        // Filter durasi — bandingkan dengan nilai di kolom Durasi STNK (sudah angka)
         if (durasiFilter > 0) {
-          if (hari === null || hari <= durasiFilter) continue;
+          const durasi = parseInt(row[durasiIdx]);
+          if (isNaN(durasi) || durasi <= durasiFilter) continue;
         }
 
-        count++;
+        result.push({ row, originalIdx: i });
+      }
+      return result;
+    }
+
+    function renderRows(data) {
+      const durasiIdx = getDurasiStnkIdx();
+      const filtered  = getFilteredRows(data);
+      let html = '';
+
+      for (const { row, originalIdx } of filtered) {
+        const rowIndex = row[row.length - 1];
         html += '<tr>';
         for (let j = 0; j < headers.length; j++) {
-          const val = row[j] || '';
-          const isStatus = (val === 'MASIH PROSES' || val === 'SELESAI');
-          const isPrimary = j === 0 || j === 1;
-          const isTgl = j === tglIdx;
+          const val = row[j] ?? '';
+          const isStatus   = (val === 'MASIH PROSES' || val === 'SELESAI');
+          const isPrimary  = (j === 0 || j === 1);
+          const isDurasi   = (j === durasiIdx);
 
           if (isStatus) {
             const cls = val === 'SELESAI' ? 'badge-selesai' : 'badge-proses';
             html += `<td><span class="badge-status ${cls}">${esc(val)}</span></td>`;
-          } else if (isTgl) {
-            html += `<td>${esc(val)} ${getDurasiBadge(hari)}</td>`;
+          } else if (isDurasi) {
+            html += `<td>${getDurasiBadge(val)}</td>`;
           } else if (isPrimary) {
             html += `<td class="td-primary">${esc(val)}</td>`;
           } else {
             html += `<td>${esc(val)}</td>`;
           }
         }
-        html += `<td><button class="btn-row-edit" onclick="openEditModal(${rowIndex}, ${i})">✏ Edit</button></td>`;
+        html += `<td><button class="btn-row-edit" onclick="openEditModal(${rowIndex}, ${originalIdx})">✏ Edit</button></td>`;
         html += '</tr>';
       }
 
-      if (count === 0) {
+      if (filtered.length === 0) {
         html = `<tr><td colspan="99"><div class="state-empty"><span class="empty-icon">🔍</span><p>Tidak ada data yang cocok</p></div></td></tr>`;
       }
 
       document.getElementById('tableBody').innerHTML = html;
-      document.getElementById('countPill').textContent = `${count} data`;
+      document.getElementById('countPill').textContent = `${filtered.length} data`;
     }
 
     function filterRows() {
@@ -1288,60 +1291,49 @@
         return;
       }
 
-      const keyword = document.getElementById('searchInput').value.toLowerCase();
-      const statusFilter = document.getElementById('filterStatus').value;
-      const durasiFilter = parseInt(document.getElementById('filterDurasi').value) || 0;
-      const tglIdx = getTanggalColIdx();
+      const filtered = getFilteredRows(allData);
 
-      // Build header row (exclude rowIndex col)
-      const exportHeaders = [...headers, 'Durasi (Hari)'];
-      const rows = [exportHeaders];
-
-      for (let i = 1; i < allData.length; i++) {
-        const row = allData[i];
-        const rowStr = row.join(' ').toLowerCase();
-
-        if (keyword && !rowStr.includes(keyword)) continue;
-        if (statusFilter && !row.some(c => c === statusFilter)) continue;
-
-        const hari = getDurasiHari(row[tglIdx]);
-        if (durasiFilter > 0 && (hari === null || hari <= durasiFilter)) continue;
-
-        const dataRow = row.slice(0, headers.length); // exclude rowIndex
-        dataRow.push(hari !== null ? hari : '-');
-        rows.push(dataRow);
-      }
-
-      if (rows.length <= 1) {
+      if (filtered.length === 0) {
         showToast('⚠️ Tidak ada data yang cocok untuk diekspor', 'error');
         return;
       }
 
+      // Header row — ambil dari headers (tanpa kolom rowIndex)
+      const exportHeaders = [...headers];
+      const rows = [exportHeaders];
+
+      for (const { row } of filtered) {
+        // Slice exclude kolom rowIndex di akhir
+        rows.push(row.slice(0, headers.length).map(v => v ?? ''));
+      }
+
       const ws = XLSX.utils.aoa_to_sheet(rows);
 
-      // Style kolom lebar otomatis
+      // Auto-width kolom berdasarkan konten
       const colWidths = exportHeaders.map((h, ci) => {
         let maxLen = String(h).length;
         for (let r = 1; r < rows.length; r++) {
-          const cellLen = String(rows[r][ci] || '').length;
-          if (cellLen > maxLen) maxLen = cellLen;
+          const len = String(rows[r][ci] ?? '').length;
+          if (len > maxLen) maxLen = len;
         }
-        return { wch: Math.min(maxLen + 4, 40) };
+        return { wch: Math.min(maxLen + 4, 45) };
       });
       ws['!cols'] = colWidths;
+
+      // Freeze baris header
+      ws['!freeze'] = { xSplit: 0, ySplit: 1 };
 
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Outstanding BBN');
 
-      // Nama file dengan tanggal hari ini
       const today = new Date();
-      const dd = String(today.getDate()).padStart(2, '0');
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const yyyy = today.getFullYear();
+      const dd    = String(today.getDate()).padStart(2, '0');
+      const mm    = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy  = today.getFullYear();
       const filename = `Outstanding_STNK_Nagamas_${yyyy}${mm}${dd}.xlsx`;
 
       XLSX.writeFile(wb, filename);
-      showToast(`✅ Berhasil export ${rows.length - 1} data ke Excel!`, 'success');
+      showToast(`✅ Berhasil export ${filtered.length} data ke Excel!`, 'success');
     }
 
     // ─── TOGGLE FORM TAMBAH ───
