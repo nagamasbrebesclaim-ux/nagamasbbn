@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Outstanding STNK & Nopol — Nagamas Motor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
@@ -789,7 +790,62 @@
     .toast-wrap.success .toast-inner { background: #15803D; }
     .toast-wrap.error .toast-inner { background: var(--red); }
 
-    /* RESPONSIVE */
+    /* EXPORT BUTTON */
+    .btn-export {
+      height: 42px;
+      padding: 0 18px;
+      background: #16a34a;
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-export:hover { background: #15803d; box-shadow: 0 4px 14px rgba(22,163,74,0.35); }
+    .btn-export svg { width: 15px; height: 15px; }
+
+    /* DURATION BADGE */
+    .badge-duration {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge-duration.d-ok { background: #DCFCE7; color: #15803D; }
+    .badge-duration.d-warn { background: #FEF9C3; color: #A16207; }
+    .badge-duration.d-alert { background: #FEE2E2; color: #B91C1C; }
+    .badge-duration.d-critical { background: #7f1d1d; color: #fff; }
+
+    /* TOOLBAR SECOND ROW */
+    .toolbar-row2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--grey-500);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      white-space: nowrap;
+    }
+
+  
     @media (max-width: 640px) {
       .stats-grid { grid-template-columns: repeat(3, 1fr); }
       .hero-strip { padding: 22px 20px; }
@@ -963,6 +1019,20 @@
         <option value="MASIH PROSES">Masih Proses</option>
         <option value="SELESAI">Selesai</option>
       </select>
+      <select class="filter-select" id="filterDurasi" onchange="filterRows()" title="Filter berdasarkan durasi proses STNK">
+        <option value="">⏱ Semua Durasi</option>
+        <option value="3">Lebih dari 3 Hari</option>
+        <option value="5">Lebih dari 5 Hari</option>
+        <option value="14">Lebih dari 14 Hari</option>
+      </select>
+      <button class="btn-export" onclick="exportToExcel()" title="Export data ke file Excel (.xlsx)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Export Excel
+      </button>
     </div>
 
     <div class="table-section">
@@ -1121,9 +1191,41 @@
       renderRows(data);
     }
 
+    // ─── HELPERS ───
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // Find index of tanggal column from headers
+    function getTanggalColIdx() {
+      const idx = headers.findIndex(h => /tanggal|tgl|date/i.test(String(h)));
+      return idx !== -1 ? idx : 5; // fallback ke index 5
+    }
+
+    // Hitung selisih hari dari tanggal ke hari ini
+    function getDurasiHari(tglStr) {
+      if (!tglStr) return null;
+      const d = new Date(tglStr);
+      if (isNaN(d)) return null;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      d.setHours(0, 0, 0, 0);
+      return Math.floor((today - d) / 86400000);
+    }
+
+    function getDurasiBadge(hari) {
+      if (hari === null) return '';
+      if (hari <= 3) return `<span class="badge-duration d-ok">${hari} hr</span>`;
+      if (hari <= 5) return `<span class="badge-duration d-warn">${hari} hr</span>`;
+      if (hari <= 14) return `<span class="badge-duration d-alert">${hari} hr</span>`;
+      return `<span class="badge-duration d-critical">${hari} hr 🔥</span>`;
+    }
+
     function renderRows(data) {
       const keyword = document.getElementById('searchInput').value.toLowerCase();
       const statusFilter = document.getElementById('filterStatus').value;
+      const durasiFilter = parseInt(document.getElementById('filterDurasi').value) || 0;
+      const tglIdx = getTanggalColIdx();
       let count = 0;
       let html = '';
 
@@ -1138,16 +1240,25 @@
           if (!hasStatus) continue;
         }
 
+        // Filter durasi
+        const hari = getDurasiHari(row[tglIdx]);
+        if (durasiFilter > 0) {
+          if (hari === null || hari <= durasiFilter) continue;
+        }
+
         count++;
         html += '<tr>';
         for (let j = 0; j < headers.length; j++) {
           const val = row[j] || '';
           const isStatus = (val === 'MASIH PROSES' || val === 'SELESAI');
-          const isPrimary = j === 0 || j === 1; // First two cols bold
+          const isPrimary = j === 0 || j === 1;
+          const isTgl = j === tglIdx;
 
           if (isStatus) {
             const cls = val === 'SELESAI' ? 'badge-selesai' : 'badge-proses';
             html += `<td><span class="badge-status ${cls}">${esc(val)}</span></td>`;
+          } else if (isTgl) {
+            html += `<td>${esc(val)} ${getDurasiBadge(hari)}</td>`;
           } else if (isPrimary) {
             html += `<td class="td-primary">${esc(val)}</td>`;
           } else {
@@ -1170,19 +1281,67 @@
       if (allData.length > 0) renderRows(allData);
     }
 
-    // ─── STATS ───
-function updateStats(data) {
-  const total = data.length - 1;
-      let proses = 0, selesai = 0;
-      for (let i = 1; i < data.length; i++) {
-        const row = data[i];
-        if (row.includes('MASIH PROSES')) proses++;
-        if (row.includes('SELESAI')) selesai++;
+    // ─── EXPORT EXCEL ───
+    function exportToExcel() {
+      if (!allData || allData.length <= 1) {
+        showToast('⚠️ Tidak ada data untuk diekspor', 'error');
+        return;
       }
-      document.getElementById('statTotal').textContent = total;
-      document.getElementById('statProses').textContent = proses;
-      document.getElementById('statSelesai').textContent = selesai;
-      document.getElementById('statsGrid').style.display = 'grid';
+
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('filterStatus').value;
+      const durasiFilter = parseInt(document.getElementById('filterDurasi').value) || 0;
+      const tglIdx = getTanggalColIdx();
+
+      // Build header row (exclude rowIndex col)
+      const exportHeaders = [...headers, 'Durasi (Hari)'];
+      const rows = [exportHeaders];
+
+      for (let i = 1; i < allData.length; i++) {
+        const row = allData[i];
+        const rowStr = row.join(' ').toLowerCase();
+
+        if (keyword && !rowStr.includes(keyword)) continue;
+        if (statusFilter && !row.some(c => c === statusFilter)) continue;
+
+        const hari = getDurasiHari(row[tglIdx]);
+        if (durasiFilter > 0 && (hari === null || hari <= durasiFilter)) continue;
+
+        const dataRow = row.slice(0, headers.length); // exclude rowIndex
+        dataRow.push(hari !== null ? hari : '-');
+        rows.push(dataRow);
+      }
+
+      if (rows.length <= 1) {
+        showToast('⚠️ Tidak ada data yang cocok untuk diekspor', 'error');
+        return;
+      }
+
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+
+      // Style kolom lebar otomatis
+      const colWidths = exportHeaders.map((h, ci) => {
+        let maxLen = String(h).length;
+        for (let r = 1; r < rows.length; r++) {
+          const cellLen = String(rows[r][ci] || '').length;
+          if (cellLen > maxLen) maxLen = cellLen;
+        }
+        return { wch: Math.min(maxLen + 4, 40) };
+      });
+      ws['!cols'] = colWidths;
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Outstanding BBN');
+
+      // Nama file dengan tanggal hari ini
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+      const filename = `Outstanding_STNK_Nagamas_${yyyy}${mm}${dd}.xlsx`;
+
+      XLSX.writeFile(wb, filename);
+      showToast(`✅ Berhasil export ${rows.length - 1} data ke Excel!`, 'success');
     }
 
     // ─── TOGGLE FORM TAMBAH ───
@@ -1298,7 +1457,22 @@ function updateStats(data) {
       }
     }
 
-    // ─── HELPERS ───
+    // ─── STATS ───
+    function updateStats(data) {
+      const total = data.length - 1;
+      let proses = 0, selesai = 0;
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (row.includes('MASIH PROSES')) proses++;
+        if (row.includes('SELESAI')) selesai++;
+      }
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statProses').textContent = proses;
+      document.getElementById('statSelesai').textContent = selesai;
+      document.getElementById('statsGrid').style.display = 'grid';
+    }
+
+    // ─── TOAST ───
     function showToast(msg, type = '') {
       const wrap = document.getElementById('toast');
       const inner = document.getElementById('toastInner');
@@ -1309,9 +1483,6 @@ function updateStats(data) {
       setTimeout(() => wrap.classList.remove('show'), 3500);
     }
 
-    function esc(s) {
-      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
   </script>
 
 </body>
