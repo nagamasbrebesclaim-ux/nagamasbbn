@@ -585,21 +585,15 @@
       const now = new Date();
       const tglCetak = now.toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
       
-      // Ambil Status Filter
-      const statusF = document.getElementById('filterStatus').options[document.getElementById('filterStatus').selectedIndex].text;
-      const durasiF = document.getElementById('filterDurasi').options[document.getElementById('filterDurasi').selectedIndex].text;
-      const keywordF = document.getElementById('searchInput').value || '-';
-
       doc.text(`Tanggal Cetak  : ${tglCetak}`, 14, 40);
-      doc.text(`Total Data       : ${filtered.length} Unit (Berdasarkan Filter)`, 14, 45);
-      doc.text(`Filter Aktif      : ${statusF} | ${durasiF} | Keyword: ${keywordF}`, 14, 50);
+      doc.text(`Total Data       : ${filtered.length} Unit`, 14, 45);
 
       // 3. Setup Tabel AutoTable
       const exportHeaders = [...headers];
       const bodyRows = filtered.map(({row}) => row.slice(0, headers.length).map(v => v ?? ''));
 
       doc.autoTable({
-        startY: 55,
+        startY: 52,
         head: [exportHeaders],
         body: bodyRows,
         theme: 'grid',
